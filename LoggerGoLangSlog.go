@@ -37,18 +37,18 @@ const (
 ) 
 
 const (
-    alert           = LOG_ALERT
-    crit            = LOG_CRIT
-    debug           = LOG_DEBUG
-    emer            = LOG_EMERG
-    err             = LOG_ERR
-    error           = LOG_ERR
-    info            = LOG_INFO
-    none            = INTERNAL_NOPRI
-    notice          = LOG_NOTICE
-    panic           = LOG_EMERG
-    warn            = LOG_WARNING
-    warning         = LOG_WARNING
+    ALERT           = LOG_ALERT
+    CRIT            = LOG_CRIT
+    DEBUG           = LOG_DEBUG
+    EMER            = LOG_EMERG
+    ERR             = LOG_ERR
+    ERROR           = LOG_ERR
+    INFO            = LOG_INFO
+    NONE            = INTERNAL_NOPRI
+    NOTICE          = LOG_NOTICE
+    PANIC           = LOG_EMERG
+    WARN            = LOG_WARNING
+    WARNING         = LOG_WARNING
 ) 
 
 const (
