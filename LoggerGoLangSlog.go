@@ -1,7 +1,5 @@
 package LoggerGoLangSlog
 
-/*
-
 const (
     LOG_KERN        = 0x0
     LOG_USER        = 0x8
@@ -52,8 +50,6 @@ const (
     WARN            = LOG_WARNING
     WARNING         = LOG_WARNING
 ) 
-
-*/
 
 const (
     LOG_PID         = 0x01
