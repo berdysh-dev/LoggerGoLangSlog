@@ -1,5 +1,13 @@
 package LoggerGoLangSlog
 
+import (
+    "fmt"
+    "io"
+    "net"
+    "net/url"
+    "encoding/json"
+)
+
 const (
     LOG_KERN        = 0x0
     LOG_USER        = 0x8
@@ -60,7 +68,97 @@ const (
     LOG_PERROR      = 0x20
 ) 
 
+const (
+    URL             = "URL"
+    FACILITY        = "FACILITY"
+) 
 
+type t_my_writer struct {
+    facility    int
+    url         string
+
+    conn        net.Conn 
+
+    Scheme      string
+    Opaque      string
+    User        *url.Userinfo
+    Host        string
+    Path        string
+    RawPath     string
+    OmitHost    bool
+    ForceQuery  bool
+    RawQuery    string
+    Fragment    string
+    RawFragment string
+}
+
+func (this *t_my_writer) Setter(k string,v any){
+    switch(k){
+    case FACILITY:{
+            this.facility = v.(int);
+        }
+    case URL:{
+            this.url = v.(string);
+        }
+    }
+}
+
+func (this *t_my_writer) Open(){
+    fmt.Printf("URL[%s]\n",this.url) ;
+
+    ui, err := url.Parse(this.url) ;
+
+    if(err != nil){
+        fmt.Printf("err[%s]\n",err) ;
+    }else{
+        this.Scheme         = ui.Scheme ;
+        this.Opaque         = ui.Opaque ;
+        this.User           = ui.User ;
+        this.Host           = ui.Host ;
+        this.Path           = ui.Path ;
+        this.RawPath        = ui.RawPath ;
+        this.OmitHost       = ui.OmitHost ;
+        this.ForceQuery     = ui.ForceQuery ;
+        this.RawQuery       = ui.RawQuery ;
+        this.Fragment       = ui.Fragment ;
+        this.RawFragment    = ui.RawFragment ;
+    }
+
+    fmt.Printf("Scheme[%s]\n",this.Scheme) ;
+
+    switch(this.Scheme){
+    case "unix":{
+            conn, err := net.Dial("unix",this.Path) ;
+            if(err != nil){
+                fmt.Printf("err[%s]\n",err) ;
+            }else{
+                fmt.Printf("ok[%s]\n",err) ;
+                this.conn = conn ;
+            }
+        }
+    }
+
+}
+
+func (this *t_my_writer) Write(p []byte) (n int, err error){
+    var j map[string]interface{} ;
+    e := json.Unmarshal(p,&j) ;
+    if(e != nil){
+        fmt.Printf("err[%s]\n",e) ;
+    }else{
+        fmt.Printf("level[%s]/msg[%s]/facility[0x%x]\n",j["level"],j["msg"],this.facility) ;
+    }
+    return len(p) , nil ;
+}
+
+func NewIoWriter() (io.Writer,*t_my_writer) {
+
+    x := t_my_writer{} ;
+
+    var my_writer io.Writer = &x ;
+
+    return my_writer,&x ;
+}
 
 
 
