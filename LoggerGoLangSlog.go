@@ -1,11 +1,11 @@
 package LoggerGoLangSlog
 
 const (
-    LOG_KERN        = 0x0
-    LOG_USER        = 0x8
-    LOG_MAIL        = 0x10
-    LOG_DAEMON      = 0x18
-    LOG_AUTH        = 0x20
+    LOG_KERN        = 0x0   ,
+    LOG_USER        = 0x8   ,
+    LOG_MAIL        = 0x10  ,
+    LOG_DAEMON      = 0x18  ,
+    LOG_AUTH        = 0x20  ,
     LOG_SYSLOG      = 0x28
     LOG_LPR         = 0x30
     LOG_NEWS        = 0x38
